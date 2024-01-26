@@ -94,7 +94,21 @@
 ; 2. (cons player lop)
 
 ; Sample lop
-(define
+(define LOP1 (list PLAYER1 PLAYER2))
+(define LOP2 (list PLAYER2 PLAYER3))
+(define LOP3 (list PLAYER1 PLAYER3))
+
+;;; World
+;; A world is a structure (make-world loc lop lon)
+;; where lon is contains the indeces of the cards that are revealed to all players
+;; in the current WorldState
+(define-struct world (loc lop revealed-cards))
+
+;; Sample worlds
+(define INIT-WORLD (shuffle LOC1) '() '())
+(define WORLD1 (make-world LOC1 LOP1 '(4 22)))
+(define WORLD2 LOC2 LOP2 '(3))
+(define WORLD3 (make-world LOC3 LOP3 '()))
 
 ;                                                                                                                          
 ;                                                                                                                          
