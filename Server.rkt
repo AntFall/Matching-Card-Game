@@ -1,7 +1,4 @@
-;; The first three lines of this file were inserted by DrRacket. They record metadata
-;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-advanced-reader.ss" "lang")((modname Server) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
-;#lang htdp/asl
+#lang htdp/asl
 (require 2htdp/abstraction)
 (require 2htdp/image)
 (require 2htdp/universe)
@@ -117,7 +114,7 @@
 ;; A univ is a structure: (make-univ (ListOf iworld) world)
 (define-struct univ (iws game))
 ;; Sample univs
-(define INIT-UNIV (make-univ '() (make-world (shuffle LOC1)
+(define INIT-UNIV (make-univ '() (make-world LOC1
                                              (list (make-player "Computer" '() #f))
                                              '())))
 (define UNIV1 (make-univ (list iworld1 iworld2) (make-world LOC1
@@ -969,7 +966,7 @@ Tests using sample for values for f-on-mw
                                                                                      '(1)))
                                        iworld1 (list 'click (random 36))))
 
-(define RESET-REVEALED-CARDS (
+;(define RESET-REVEALED-CARDS (
 ;                                   
 ;                                   
 ;                                   
