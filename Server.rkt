@@ -966,7 +966,92 @@ Tests using sample for values for f-on-mw
                                                                                      '(1)))
                                        iworld1 (list 'click (random 36))))
 
-;(define RESET-REVEALED-CARDS (
+(define RESET-REVEALED-CARDS (make-bundle (make-univ (univ-iws UNIV2) (make-world (world-loc (univ-game UNIV2))
+                                                                                  (world-lop (univ-game UNIV2))
+                                                                                  '()))
+                                          (map (lambda (iw) (make-mail iw (list 'world (marshall-world (make-world (world-loc (univ-game UNIV2))
+                                                                                                                   (world-lop (univ-game UNIV2))
+                                                                                                                   '())))))
+                                               (univ-iws UNIV2))
+                                          '()))
+(define NO-CHANGE (make-bundle UNIV1
+                               (list (make-mail iworld1 (list 'world (marshall-world (univ-game UNIV1))))
+                                     (make-mail iworld2 (list 'world (marshall-world (univ-game UNIV1)))))
+                               '()))
+;; Tests using sample computations for process-tick
+(check-random (process-tick (make-univ (list iworld1 iworld2) (make-world LOC2 (list (make-player "Computer" '() #t)
+                                                                                     (make-player "iworld1" '() #f))
+                                                                          '(1))))
+              (process-message (make-univ (list iworld1 iworld2) (make-world LOC2 (list (make-player "Computer" '() #t)
+                                                                                        (make-player "iworld1" '() #f))
+                                                                             '(1)))
+                               iworld1 (list 'click (random 36)))) ;; Same as COMPUTER-MOVE. Need full expression to properly use check-random.
+                                                                   ;; Note too that process-message will return a bundle
+(check-expect (process-tick UNIV2) RESET-REVEALED-CARDS)
+(check-expect (process-tick UNIV1) NO-CHANGE)
+;; Tests using sample values for process-tick
+(check-random (process-tick (make-univ (list iworld1) (make-world (list GREEN DARKKHAKI PURPLE RED CYAN DEEPPINK
+                                                                        RED GOLD BLUE DARKRED CHOCOLATE DARKKHAKI
+                                                                        DARKGREEN DEEPPINK BLUE YELLOW DARKOLIVEGREEN BROWN
+                                                                        CHOCOLATE ORANGE PURPLE GREEN POWDERBLUE DARKMAGENTA
+                                                                        DARKOLIVEGREEN BROWN POWDERBLUE DARKRED ORANGE DARKGREEN
+                                                                        ROYALBLUE CYAN GOLD DARKMAGENTA ROYALBLUE YELLOW)
+                                                                  (list (make-player "Computer" '() #t)
+                                                                        (make-player "iworld1" '() #f))
+                                                                  '(2))))
+              (process-message (make-univ (list iworld1) (make-world (list GREEN DARKKHAKI PURPLE RED CYAN DEEPPINK
+                                                                           RED GOLD BLUE DARKRED CHOCOLATE DARKKHAKI
+                                                                           DARKGREEN DEEPPINK BLUE YELLOW DARKOLIVEGREEN BROWN
+                                                                           CHOCOLATE ORANGE PURPLE GREEN POWDERBLUE DARKMAGENTA
+                                                                           DARKOLIVEGREEN BROWN POWDERBLUE DARKRED ORANGE DARKGREEN
+                                                                           ROYALBLUE CYAN GOLD DARKMAGENTA ROYALBLUE YELLOW)
+                                                                     (list (make-player "Computer" '() #t)
+                                                                           (make-player "iworld1" '() #f))
+                                                                     '(2)))
+                               iworld1
+                               (list 'click (random 36))))
+(check-expect (process-tick (make-univ (list iworld2 iworld3) (make-world (list DEEPPINK GREEN NONE PURPLE NONE ROYALBLUE
+                                                                                NONE NONE RED NONE POWDERBLUE DARKGREEN
+                                                                                POWDERBLUE DARKKHAKI NONE BROWN CHOCOLATE DARKKHAKI
+                                                                                CYAN ROYALBLUE CYAN NONE DARKMAGENTA NONE
+                                                                                NONE DARKMAGENTA BLUE NONE DARKGREEN RED
+                                                                                PURPLE BROWN DEEPPINK GREEN CHOCOLATE BLUE)
+                                                                          (list (make-player "Computer" (list ORANGE) #f)
+                                                                                (make-player "iworld2" (list PURPLE) #t)
+                                                                                (make-player "iworld3" '() #f))
+                                                                          '(2 30))))
+              (make-bundle (make-univ (list iworld2 iworld3) (make-world (list DEEPPINK GREEN NONE PURPLE NONE ROYALBLUE
+                                                                               NONE NONE RED NONE POWDERBLUE DARKGREEN
+                                                                               POWDERBLUE DARKKHAKI NONE BROWN CHOCOLATE DARKKHAKI
+                                                                               CYAN ROYALBLUE CYAN NONE DARKMAGENTA NONE
+                                                                               NONE DARKMAGENTA BLUE NONE DARKGREEN RED
+                                                                               PURPLE BROWN DEEPPINK GREEN CHOCOLATE BLUE)
+                                                                         (list (make-player "Computer" (list ORANGE) #f)
+                                                                               (make-player "iworld2" (list PURPLE) #t)
+                                                                               (make-player "iworld3" '() #f))
+                                                                         '()))
+                           (list (make-mail iworld2 (list 'world (marshall-world (make-world (list DEEPPINK GREEN NONE PURPLE NONE ROYALBLUE
+                                                                                                   NONE NONE RED NONE POWDERBLUE DARKGREEN
+                                                                                                   POWDERBLUE DARKKHAKI NONE BROWN CHOCOLATE DARKKHAKI
+                                                                                                   CYAN ROYALBLUE CYAN NONE DARKMAGENTA NONE
+                                                                                                   NONE DARKMAGENTA BLUE NONE DARKGREEN RED
+                                                                                                   PURPLE BROWN DEEPPINK GREEN CHOCOLATE BLUE)
+                                                                                             (list (make-player "Computer" (list ORANGE) #f)
+                                                                                                   (make-player "iworld2" (list PURPLE) #t)
+                                                                                                   (make-player "iworld3" '() #f))
+                                                                                             '()))))
+                                 (make-mail iworld3 (list 'world (marshall-world (make-world (list DEEPPINK GREEN NONE PURPLE NONE ROYALBLUE
+                                                                                                   NONE NONE RED NONE POWDERBLUE DARKGREEN
+                                                                                                   POWDERBLUE DARKKHAKI NONE BROWN CHOCOLATE DARKKHAKI
+                                                                                                   CYAN ROYALBLUE CYAN NONE DARKMAGENTA NONE
+                                                                                                   NONE DARKMAGENTA BLUE NONE DARKGREEN RED
+                                                                                                   PURPLE BROWN DEEPPINK GREEN CHOCOLATE BLUE)
+                                                                                             (list (make-player "Computer" (list ORANGE) #f)
+                                                                                                   (make-player "iworld2" (list PURPLE) #t)
+                                                                                                   (make-player "iworld3" '() #f))
+                                                                                             '())))))
+                           '()))
+                                                                        
 ;                                   
 ;                                   
 ;                                   
