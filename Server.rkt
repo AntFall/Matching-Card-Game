@@ -114,7 +114,7 @@
 ;; A univ is a structure: (make-univ (ListOf iworld) world)
 (define-struct univ (iws game))
 ;; Sample univs
-(define INIT-UNIV (make-univ '() (make-world LOC1
+(define INIT-UNIV (make-univ '() (make-world (shuffle LOC1)
                                              (list (make-player "Computer" '() #f))
                                              '())))
 (define UNIV1 (make-univ (list iworld1 iworld2) (make-world LOC1
@@ -169,7 +169,7 @@
 ;; Tests using sample values for f-on-mw
 (check-expect (f-on-mw . . . . . .) . . .)  |#
 
-;;; TSM
+;;; TPM
 ;; A to-player message (tpm) is: (cons 'world mw)
 #| tpm . . . → . . .
    Purpose:
@@ -184,7 +184,25 @@ Tests using sample for computations for f-on-mw
 Tests using sample for values for f-on-mw
 (check-expect (f-on-tpm . . . . . .) . . .) . . . |#
 ;; Sample instances of tpm
-
+(define TPM1 (list 'world (list (list "green" "chocolate" "green" "none" "none" "dark magenta"
+                                      "dark green" "royal blue" "brown" "powder blue" "red" "none"
+                                      "blue" "none" "purple" "chocolate" "dark magenta" "blue"
+                                      "none" "none" "none" "dark green" "powder blue" "deep pink"
+                                      "dark khaki" "cyan" "purple" "cyan" "none" "brown"
+                                      "none" "red" "royal blue" "none" "dark khaki" "deep pink")
+                                (list (list "Alex" (list GREEN ORANGE) #t)
+                                      (list "Computer" '() #f)
+                                      (list "Joe" (list RED) #f))
+                                '())))
+(define TPM2 (list 'world (list (list "dark olive green" "red" "gold" "deep pink" "blue" "green"
+                                      "cyan" "dark red" "royal blue" "dark green" "gold" "cyan"
+                                      "red" "chocolate" "yellow" "purple" "dark green" "orange"
+                                      "purple" "blue" "yellow" "brown" "dark khaki" "orange"
+                                      "powder blue" "dark khaki" "dark magenta" "powder blue" "deep pink" "dark olive green"
+                                      "chocolate" "green" "dark red" "dark magenta" "brown" "royal blue")
+                                (list (list "Computer" (list RED) #t)
+                                      (list "Teo" (list BLUE YELLOW GREEN) #f))
+                                (list 12 34 0))))
 
 ;;; TSM
 ;; A to-server message (tsm) is (list 'click number)
@@ -201,6 +219,9 @@ Tests using sample for computations for f-on-mw
 Tests using sample for values for f-on-mw
 (check-expect (f-on-tsm . . . . . .) . . .) . . . |#
 ;; Sample instances of tsm
+(define TSM1 (list 'click 0))
+(define TSM2 (list 'click 26))
+(define TSM3 (list 'click 34))
 ;                                                                                                                                      
 ;                                                                                                                                      
 ;                                                                                                                                      
